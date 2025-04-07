@@ -1,0 +1,44 @@
+Your shortest-job first preemptive scheduler scenario has four processes P1,P2,P3,P4
+
+ P1 - arrival:0 burst:6
+ P2 - arrival:1 burst:4
+ P3 - arrival:2 burst:8
+ P4 - arrival:3 burst:2
+
+Your filesystem scenario has:
+  3 processes: P1 P2 P3
+  4 write buffers: wbuf1(17) wbuf2(19) wbuf3(23) wbuf4(29)
+    -- initial contents in parentheses
+  4 read buffers: rbuf1 rbuf2 rbuf3 rbuf4
+  Unlimited inodes, numbered from 0 upwards
+    -- inode 0 represents the (empty) filesystem root
+  Unlimited file-descriptors, numbered from 0 upwards
+    -- 0,1,2 are NOT reserved for stdin,stdout,stderr
+  Unlimited data-blocks, numbered from 0 upwards
+
+Your file-system scenario is:
+
+ fd1 = open("f1",w);  	// P1
+ write(fd1,wbuf1);  	// P1
+ fd3 = open("f2",w);  	// P2
+ write(fd3,wbuf2);  	// P2
+ close(fd1);    	// P1
+ write(fd3,wbuf3);  	// P2
+ fd4 = open("f3",w);  	// P3
+ write(fd4,wbuf1);  	// P3
+ close(fd3);    	// P2
+ write(fd4,wbuf4);  	// P3
+ close(fd4);    	// P3
+ fd2 = open("f1",r);  	// P1
+ fd3 = open("f2",r);  	// P2
+ fd5 = open("f3",r);  	// P3
+ read(fd3,rbuf2);  	// P2
+ fd6 = open("f3",r);  	// P3
+ read(fd3,rbuf3);  	// P2
+ read(fd2,rbuf1);  	// P1
+ close(fd3);    	// P2
+ read(fd5,rbuf4);  	// P3
+ close(fd2);    	// P1
+ read(fd6,rbuf5);  	// P3
+ close(fd5);    	// P3
+ close(fd6);    	// P3
