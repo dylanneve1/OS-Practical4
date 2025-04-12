@@ -1,0 +1,8 @@
+RUN 1 Q ;
+RUN 2 Q 1 ;
+RUN 2 Q 1 3 ;
+RUN 2 Q 4 1 3 ;
+RUN 2 Q 4 1 3 ;
+RUN 4 Q 1 3 ;
+RUN 1 Q 3 ;
+RUN 3 Q ;
